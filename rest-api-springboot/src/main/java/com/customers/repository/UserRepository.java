@@ -24,7 +24,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	void deleteById(int id);
 
 	User findByEmail(String email);
-
+	// mã hóa password
 	@Transactional
 	@Modifying
 	@Query("UPDATE User u SET u.name = ?1, u.email = ?2, u.password = ?3 WHERE u.id = ?4")

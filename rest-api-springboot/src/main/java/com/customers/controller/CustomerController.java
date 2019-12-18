@@ -18,7 +18,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.customers.business.CustomerBusiness;
 import com.customers.entity.Customer;
 import com.customers.service.CustomerService;
-
+/*
+	1. Nên sử dụng int cho offset và limit vì sẽ giảm được độ phức tạp khi xử lý của source code
+	2. Không sử dụng HttpStatus.NOT_FOUND cho trường hợp get data từ DB không có dữ liệu
+	3. Hạn chế sử dụng case get data vì sẽ ảnh hưởng đến performance của hệ thống
+	4. Xử lý if-else trong service
+	5. Hàm checkListCustomersEmpty có thể check null hoặc size của mảng (thay vì tạo hàm mới)
+	6. Tạo response package map data và return response cho client
+	7. Tầng business là để xử lý logic cho API chứ không phải để khai báo hàm validate, các hàm validate nên được common hóa ở dạng tĩnh ở một file common
+	8. API path nên được define sao cho common hóa ở dạng static trong một class cụ thể
+	9. Nên thêm comment cho các method ở đầu hàm
+	10. Nên sử dụng Abstract chung cho các controllers
+	11. Nên sử dụng hàm check empty của springframework để check null và empty
+	12. Cần thêm config log cho app
+	13. Nên thêm xử lý exception cho app
+	14. Nên thêm request package map data nhận dữ liệu xử lý
+*/
 @RestController
 @RequestMapping(value = "api/v1/customers")
 public class CustomerController {
@@ -69,7 +84,7 @@ public class CustomerController {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	// updateCustomersById -> updateCustomerById
 	@DeleteMapping(value = "/{_id}")
 	public ResponseEntity<Void> deleteCustomerById(@PathVariable String _id) {
 		Customer customer = customerService.findBy_id(_id);
